@@ -1,3 +1,7 @@
+/*
+  FILE DI COLLEGAMENTE AL DATABASE
+*/
+
 const mysql = require("mysql2");
 
 const connection = mysql.createConnection({
