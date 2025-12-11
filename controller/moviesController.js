@@ -4,11 +4,14 @@ const index = (req, res) => {
   const sql = "SELECT * FROM movies";
   connection.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: "Database query failed" });
+    console.log(results);
     res.json(results);
   });
 };
 
-const show = (req, res) => {};
+const show = (req, res) => {
+  const sql = "SELECT `text` FROM `reviews` WHERE `movie_id` = ?";
+};
 
 const store = (req, res) => {};
 

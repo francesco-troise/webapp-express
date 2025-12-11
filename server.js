@@ -3,6 +3,9 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
+//middleware per parsing automatico del corpo delle richieste HTTP
+app.use(express.json());
+
 //Import del router
 const moviesRouter = require("./router/movies");
 
