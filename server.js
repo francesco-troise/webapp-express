@@ -3,6 +3,12 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
+//Import del middlewere per accesso al database
+const corsMiddleware = require("./middleware/generic_middelware");
+
+//middleware per accesso al database
+app.use(corsMiddleware);
+
 //middleware per parsing automatico del corpo delle richieste HTTP
 app.use(express.json());
 
