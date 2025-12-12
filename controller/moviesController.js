@@ -12,6 +12,7 @@ const index = (req, res) => {
 const show = (req, res) => {
   const id = Number(req.params.id);
   const sql = "SELECT * FROM movies WHERE id = ?";
+  const squl_reviews = "SELECT * FROM reviews WHERE movie_id = ?";
 
   connection.query(sql, [id], (err, results) => {
     if (err) {
@@ -21,7 +22,19 @@ const show = (req, res) => {
       return res.status(404).json({ error: true, message: "404 NOT FOUND" });
     }
 
-    res.json(results[0]);
+    const movie = results[0];
+
+    connection.query(squl_reviews, [id], (errReviews, resultsReviews) => {
+      if (errReviews) {
+        return res.status(500).json({ error: true, message: err.message });
+      }
+      if (resultsReviews.length === 0) {
+        return res.status(404).json({ error: true, message: "404 NOT FOUND" });
+      }
+
+      movie.reviews = resultsReviews;
+      res.json(movie);
+    });
   });
 };
 
