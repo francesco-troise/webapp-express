@@ -10,7 +10,19 @@ const index = (req, res) => {
 };
 
 const show = (req, res) => {
-  const sql = "SELECT `text` FROM `reviews` WHERE `movie_id` = ?";
+  const id = Number(req.params.id);
+  const sql = "SELECT * FROM movies WHERE id = ?";
+
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: true, message: err.message });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: true, message: "404 NOT FOUND" });
+    }
+
+    res.json(results[0]);
+  });
 };
 
 const store = (req, res) => {};
