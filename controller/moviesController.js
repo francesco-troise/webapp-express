@@ -39,10 +39,26 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
+  //console.log(req.body);
+  //console.log(req.file);
+  const { title, director, genre, release_year, abstract } = req.body;
+  //upload.single(middlewere) intercetta la request, salva il file, ha così accesso a diverse info, prediamo ".filename"
+  const imageName = req.file.filename;
 
-  res.send("ok");
+  const imagePath = `http://localhost:3000/uploads/${imageName}`;
+
+  const sql =
+    "INSERT INTO movies (title, director, genre, release_year, abstract, image) VALUES(?, ?, ?, ?, ?, ?)";
+
+  connection.query(
+    sql,
+    [title, director, genre, release_year, abstract, imagePath],
+    (err, results) => {
+      if (err)
+        return res.status(500).json({ error: true, message: err.message });
+      res.status(201).json({ message: "film added" });
+    }
+  );
 };
 
 const update = (req, res) => {};

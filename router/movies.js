@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(
       null,
-      uniqueSuffix + "-" + file.originalname.toLowerCase().replaceAll(" ", "-")
+      uniqueSuffix + "-" + file.originalname.toLowerCase().replaceAll(" ", "_")
     );
   },
 });
