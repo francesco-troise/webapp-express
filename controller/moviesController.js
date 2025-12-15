@@ -4,7 +4,7 @@ const index = (req, res) => {
   const sql = "SELECT * FROM movies";
   connection.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: "Database query failed" });
-    console.log(results);
+    //console.log(results);
     res.json(results);
   });
 };
@@ -38,7 +38,12 @@ const show = (req, res) => {
   });
 };
 
-const store = (req, res) => {};
+const store = (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+
+  res.send("ok");
+};
 
 const update = (req, res) => {};
 
