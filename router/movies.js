@@ -3,7 +3,8 @@ const router = express.Router();
 //Import di "multer" per gestire acuisizione file
 const multer = require("multer");
 //upload: istanza di multer, dest: cartella di destinazione dei file caricati
-const upload = multer({ dest: "uploads/" });
+//const upload = multer({ dest: "uploads/" });
+
 //Import del controller
 const moviesController = require("../controller/moviesController");
 
@@ -12,6 +13,26 @@ router.get("/", moviesController.index);
 
 //Show
 router.get("/:id", moviesController.show);
+
+/*
+    "diskStorage" permette di avere controllo diretto su dove salvare i file ricevuto, e sul nome da seegnargli
+    in questo caso si utilizza un suffisso unico, ed il nome originale del file(così da conservane il formato)
+*/
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(
+      null,
+      uniqueSuffix + "-" + file.originalname.toLowerCase().replaceAll(" ", "-")
+    );
+  },
+});
+
+//Utilizzo di storage nella creazione di "upload"
+const upload = multer({ storage: storage });
 
 /*
     StoreMovie
