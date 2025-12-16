@@ -19,7 +19,7 @@ const moviesRouter = require("./router/movies");
 app.use("/movies", moviesRouter);
 
 //Definizione degli asstes statici
-app.use(express.static("pubblic"));
+app.use(express.static("public"));
 
 //Definizione rotta radice
 app.get("/", (req, res) => {

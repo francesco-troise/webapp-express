@@ -26,13 +26,13 @@ const show = (req, res) => {
 
     connection.query(squl_reviews, [id], (errReviews, resultsReviews) => {
       if (errReviews) {
-        return res.status(500).json({ error: true, message: err.message });
-      }
-      if (resultsReviews.length === 0) {
-        return res.status(404).json({ error: true, message: "404 NOT FOUND" });
+        return res
+          .status(500)
+          .json({ error: true, message: errReviews.message });
       }
 
-      movie.reviews = resultsReviews;
+      //Senza recensioni non lancia un errore, passa un array vuoto
+      movie.reviews = resultsReviews || [];
       res.json(movie);
     });
   });
@@ -45,14 +45,12 @@ const store = (req, res) => {
   //upload.single(middlewere) intercetta la request, salva il file, ha così accesso a diverse info, prediamo ".filename"
   const imageName = req.file.filename;
 
-  const imagePath = `http://localhost:3000/uploads/${imageName}`;
-
   const sql =
     "INSERT INTO movies (title, director, genre, release_year, abstract, image) VALUES(?, ?, ?, ?, ?, ?)";
 
   connection.query(
     sql,
-    [title, director, genre, release_year, abstract, imagePath],
+    [title, director, genre, release_year, abstract, imageName],
     (err, results) => {
       if (err)
         return res.status(500).json({ error: true, message: err.message });

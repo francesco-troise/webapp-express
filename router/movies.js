@@ -20,13 +20,13 @@ router.get("/:id", moviesController.show);
 */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "public/movies_cover");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(
       null,
-      uniqueSuffix + "-" + file.originalname.toLowerCase().replaceAll(" ", "_")
+      uniqueSuffix + "_" + file.originalname.toLowerCase().replaceAll(" ", "_")
     );
   },
 });
